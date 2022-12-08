@@ -1,5 +1,5 @@
 import express from "express";
-// import { moviesRouter } from "./routes/movies.route.js";
+import { usersRouter } from "./routes/users.route.js";
 
 const PORT = 1234;
 const app = express();
@@ -13,9 +13,7 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.use("/bank", (req, res) => {
-  console.log("ok");
-});
+app.use("/users", usersRouter);
 
 app.listen(PORT, () => {
   console.log("server is up on port " + PORT);
