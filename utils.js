@@ -49,10 +49,9 @@ export const creatAccount = (account) => {
 export const createTransaction = (transaction) => {
   switch (transaction.type) {
     case "deposit":
-      return deposit(transaction);
+      return addMoney(transaction);
     case "credit":
-      credit(transaction);
-      break;
+      return addMoney(transaction);
     case "withdraw":
       return withdraw(transaction);
     default:
@@ -60,12 +59,17 @@ export const createTransaction = (transaction) => {
   }
 };
 
-export const deposit = (transaction) => {
+export const addMoney = (transaction) => {
+  // console.log(transaction);
   const accounts = loadFromDb("accounts");
   let account = accounts.find(
     (account) => account.uid === Number(transaction.accountNumber)
   );
-  account.cash += Number(transaction.ammount);
+  if (transaction.type === "deposit") {
+    account.cash += Number(transaction.ammount);
+  } else if (transaction.type === "credit") {
+    account.credit += Number(transaction.ammount);
+  }
   saveToDb("accounts", accounts);
   return recordTransaction(transaction);
 };
@@ -85,7 +89,6 @@ export const withdraw = (transaction) => {
 
 export const validateWithdraw = (account, ammount) => {
   const creditAvailable = account.credit - account.usedCredit;
-  console.log("creditAvailable " + creditAvailable);
   if (account.cash + creditAvailable >= ammount) {
     // withdraw possible
     const restToPay = account.cash - ammount;
@@ -111,7 +114,6 @@ export const recordTransaction = (transaction) => {
     time: date.toLocaleTimeString(),
     uid: uniqId(),
   };
-  console.log(newTransaction);
   const transactions = loadFromDb("transactions");
   transactions.push(newTransaction);
   saveToDb("transactions", transactions);
