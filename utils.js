@@ -26,9 +26,16 @@ export const saveToDb = (file, data) => {
   } catch (e) {}
 };
 
+//todo check if the funtion below is being used only once
 export const findObj = (file, uid) => {
+  console.log(uid);
+  let obj;
   const data = loadFromDb(file);
-  const obj = data.find((item) => item.uid === uid);
+  if (file === "users") {
+    obj = data.find((item) => item.uid === uid);
+  } else if (file === "accounts") {
+    obj = data.find((item) => item.uid === uid);
+  }
   if (obj) return obj;
   else return -1;
 };
@@ -39,6 +46,7 @@ export const creatAccount = (account) => {
     uid: uniqueId.RandomNum(6),
     cash: 0,
     credit: 0,
+    usedCredit: 0,
   };
   const accounts = loadFromDb("accounts");
   accounts.push(newAccount);
@@ -54,13 +62,32 @@ export const createTransaction = (transaction) => {
       return addMoney(transaction);
     case "withdraw":
       return withdraw(transaction);
+    case "transfer":
+      return transfer(transaction);
     default:
       break;
   }
 };
 
+export const transfer = ({ accountNumber, amount, recipient }) => {
+  const accounts = loadFromDb("accounts");
+  const userAccount = accounts.find((account) => account.uid === accountNumber);
+  // console.log(userAccount);
+  const updatedAccount = validateWithdraw(userAccount, amount);
+  console.log(recipient);
+  if (updatedAccount) {
+    const recipientAccount = accounts.find(
+      (account) => account.uid === recipient + ""
+    );
+    recipientAccount.cash += amount;
+    console.log(recipientAccount);
+    saveToDb("accounts", accounts);
+  } else {
+    return "user doesnt have enough credit";
+  }
+};
+
 export const addMoney = (transaction) => {
-  // console.log(transaction);
   const accounts = loadFromDb("accounts");
   let account = accounts.find(
     (account) => account.uid === Number(transaction.accountNumber)

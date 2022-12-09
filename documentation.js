@@ -36,8 +36,16 @@
 
 //  POST new transaction:
 //      fetch("<domain>/transactions")
+//*      to post a new deposit/withdraw/transfer:
 //      body:{
 //           accountNumber:  number
 //           type: "deposit,withdraw,credit",
+//           ammount: number
+//      }
+//*      to post a new deposit/withdraw/transfer:
+//      body:{
+//           accountNumber: user account number (the sender)
+//           type: "transfer",
+//           recipient: recipient account number
 //           ammount: number
 //      }
