@@ -24,3 +24,10 @@ export const saveToDb = (file, data) => {
     writeFileSync(`./db/${file}.json`, dataJson);
   } catch (e) {}
 };
+
+export const findObj = (file, uid) => {
+  const data = loadFromDb(file);
+  const obj = data.find((item) => item.uid === uid);
+  if (obj) return obj;
+  else return -1;
+};
