@@ -11,5 +11,7 @@ export const addUser = (req, res) => {
 
 export const getUser = (req, res) => {
   const user = findObj("users", req.params.uid);
-  res.status(201).send(user);
+  user != -1
+    ? res.status(201).send(user)
+    : res.status(401).send("user not found");
 };

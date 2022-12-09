@@ -20,7 +20,8 @@
 //  * DELETE ACCOUNT
 //  * UPDATE ACCOUNT
 
-//localhost:6000/accounts/:id/transaction
+//localhost:6000/transactions
+//  POST transaction
 //  * PUT {user id,amount} type: depsoite,withdraw,credit,transfer
 
 //?  DATA STRUCTURE
@@ -41,7 +42,7 @@
 //  JSON file #2: accounts
 [
   {
-    id: "",
+    uid: "",
     owner: "USER ID",
     type: "personal/business",
     cash: 0,

@@ -1,6 +1,14 @@
 import { Router } from "express";
-import { getAllAcounts } from "../controllers/accounts.controllers.js";
+import {
+  getAllAccounts,
+  addNewAccount,
+  getAccount,
+} from "../controllers/accounts.controllers.js";
 
 export const accountsRouter = Router();
 
-accountsRouter.get("", getAllAcounts);
+accountsRouter.get("", getAllAccounts);
+
+accountsRouter.get("/:uid", getAccount);
+
+accountsRouter.post("", addNewAccount);
