@@ -1,5 +1,6 @@
 import express from "express";
 import { usersRouter } from "./routes/users.route.js";
+import { accountsRouter } from "./routes/accounts.routes.js";
 
 const PORT = 1234;
 const app = express();
@@ -14,6 +15,7 @@ app.use((err, req, res, next) => {
 });
 
 app.use("/users", usersRouter);
+app.use("/accounts", accountsRouter);
 
 app.listen(PORT, () => {
   console.log("server is up on port " + PORT);
