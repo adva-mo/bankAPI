@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-function NewTransactionForm({ setNewTransaction }) {
+function TransferForm({ setNewTransaction }) {
   const myForm = useRef();
 
   const submitHandler = async (e) => {
@@ -21,6 +21,10 @@ function NewTransactionForm({ setNewTransaction }) {
         {/* <input type="text" name="name" /> */}
       </div>
       <div>
+        <label htmlFor="recipient">recipient</label>
+        <input type="text" name="recipient" />
+      </div>
+      <div>
         <label htmlFor="amount">amount</label>
         <input type="text" name="amount" />
       </div>
@@ -30,4 +34,4 @@ function NewTransactionForm({ setNewTransaction }) {
   );
 }
 
-export default NewTransactionForm;
+export default TransferForm;

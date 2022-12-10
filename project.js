@@ -1,3 +1,10 @@
+//todo * dropdown of accounts number
+//todo * add new account
+//todo * search
+//todo * check if user is not active
+//todo * try catch in server side functions
+//todo * upload to the server
+
 //? ROUTES
 
 //localhost:6000/users
