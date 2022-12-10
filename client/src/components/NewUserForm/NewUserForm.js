@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useHttp } from "../../hooks/use-http";
+import React, { useRef } from "react";
 import "./NewUserForm.css";
 
 function NewUserForm({ setNewUser }) {

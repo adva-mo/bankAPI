@@ -5,7 +5,7 @@ import "./NewUserPage.css";
 
 function NewUserPage() {
   const [newUser, setNewUser] = useState(null);
-  const { isLoading, getData } = useHttp();
+  const { getData } = useHttp();
 
   useEffect(() => {
     console.log(newUser);
@@ -17,7 +17,7 @@ function NewUserPage() {
       headers: {
         "Content-Type": "application/json",
       },
-    });
+    }); // eslint-disable-next-line
   }, [newUser]);
 
   return <NewUserForm setNewUser={setNewUser} />;
