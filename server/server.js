@@ -3,6 +3,9 @@ import { usersRouter } from "./routes/users.route.js";
 import { accountsRouter } from "./routes/accounts.routes.js";
 import { transactionsRouter } from "./routes/transactions.router.js";
 import { bankRouter } from "./routes/bank.routes.js";
+// import { appRouter } from "./routes/app.routes.js";
+import { index } from "./utils/index.js";
+
 const PORT = 1234;
 const app = express();
 
@@ -14,7 +17,9 @@ app.use((err, req, res, next) => {
   }
   next();
 });
-
+app.get("", (req, res) => {
+  res.write(index);
+});
 app.use("/api/bank", bankRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/accounts", accountsRouter);
