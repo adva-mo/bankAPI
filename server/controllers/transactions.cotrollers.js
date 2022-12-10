@@ -1,5 +1,8 @@
 import { createTransaction } from "../utils.js";
 
 export const addNewTransaction = (req, res) => {
-  res.status(201).send(createTransaction(req.body));
+  const newTransaction = createTransaction(req.body);
+  newTransaction !== -1
+    ? res.status(201).send(newTransaction)
+    : res.status(401).send("couldn't complete the transaction");
 };

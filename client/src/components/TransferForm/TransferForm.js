@@ -4,7 +4,7 @@ import bankData from "../../context/context";
 function TransferForm({ setNewTransaction }) {
   const myForm = useRef();
   const bankDataCtx = useContext(bankData);
-  console.log(bankDataCtx.accounts);
+
   const accounts = bankDataCtx.accounts.map((account) => account.uid);
 
   const submitHandler = async (e) => {
@@ -21,8 +21,8 @@ function TransferForm({ setNewTransaction }) {
       className="new-user-card"
     >
       <div>
-        <label htmlFor="name">account number</label>
-        <select>
+        <label htmlFor="accountNumber">account number</label>
+        <select name="accountNumber">
           {accounts.map((account) => {
             return (
               <option key={account} value={account}>
@@ -34,7 +34,7 @@ function TransferForm({ setNewTransaction }) {
       </div>
       <div>
         <label htmlFor="recipient">recipient</label>
-        <select>
+        <select name="recipient">
           {accounts.map((account) => {
             return (
               <option key={account} value={account}>

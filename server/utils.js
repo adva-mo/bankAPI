@@ -4,12 +4,16 @@ import uniqueId from "unique-id-key";
 
 export const createUser = (userData) => {
   const users = loadFromDb("users");
-  if (!users.find((user) => user.id === Number(userData.id))) {
-    const newUser = { ...userData, uid: uniqId(), isActive: true };
+  if (!users.find((user) => Number(user.id) === Number(userData.id))) {
+    const newUser = {
+      ...userData,
+      uid: uniqueId.RandomString(6),
+      isActive: true,
+    };
     users.push(newUser);
     saveToDb("users", users);
     return newUser;
-  } else return `user with id ${userData.id} already exist`;
+  } else return -1;
 };
 
 export const loadFromDb = (file) => {
@@ -21,16 +25,19 @@ export const loadFromDb = (file) => {
     return [];
   }
 };
+
 export const saveToDb = (file, data) => {
   try {
     const dataJson = JSON.stringify(data);
     writeFileSync(`./db/${file}.json`, dataJson);
-  } catch (e) {}
+  } catch (e) {
+    return e.message;
+  }
 };
 
 //todo check if the funtion below is being used only once
 export const findObj = (file, uid) => {
-  console.log(uid);
+  // console.log(uid);
   let obj;
   const data = loadFromDb(file);
   if (file === "users") {
@@ -43,17 +50,21 @@ export const findObj = (file, uid) => {
 };
 
 export const creatAccount = (account) => {
-  const newAccount = {
-    ...account,
-    uid: Number(uniqueId.RandomNum(6)),
-    cash: 0,
-    credit: 0,
-    usedCredit: 0,
-  };
-  const accounts = loadFromDb("accounts");
-  accounts.push(newAccount);
-  saveToDb("accounts", accounts);
-  return newAccount;
+  try {
+    const newAccount = {
+      ...account,
+      uid: Number(uniqueiId.RandomNum(6)),
+      cash: 0,
+      credit: 0,
+      usedCredit: 0,
+    };
+    const accounts = loadFromDb("accounts");
+    accounts.push(newAccount);
+    saveToDb("accounts", accounts);
+    return newAccount;
+  } catch {
+    return -1;
+  }
 };
 
 export const createTransaction = (transaction) => {
@@ -73,19 +84,18 @@ export const createTransaction = (transaction) => {
 
 export const transfer = ({ accountNumber, amount, recipient }) => {
   const accounts = loadFromDb("accounts");
-  const userAccount = accounts.find((account) => account.uid === accountNumber);
-  // console.log(userAccount);
+  const userAccount = accounts.find(
+    (account) => Number(account.uid) === Number(accountNumber)
+  );
   const updatedAccount = validateWithdraw(userAccount, amount);
-  console.log(recipient);
   if (updatedAccount) {
     const recipientAccount = accounts.find(
-      (account) => account.uid === recipient
+      (account) => account.uid === Number(recipient)
     );
-    recipientAccount.cash += amount;
-    console.log(recipientAccount);
+    recipientAccount.cash += Number(amount);
     saveToDb("accounts", accounts);
   } else {
-    return "user doesnt have enough credit";
+    return -1;
   }
 };
 
@@ -94,6 +104,7 @@ export const addMoney = (transaction) => {
   let account = accounts.find(
     (account) => account.uid === Number(transaction.accountNumber)
   );
+  if (!account) return -1;
   if (transaction.type === "deposit") {
     account.cash += Number(transaction.amount);
   } else if (transaction.type === "credit") {
@@ -108,24 +119,18 @@ export const withdraw = (transaction) => {
   let account = accounts.find(
     (account) => account.uid === Number(transaction.accountNumber)
   );
-  console.log(account);
-  const updatedAccount = validateWithdraw(account, Number(transaction.amount));
+  const updatedAccount = validateWithdraw(account, transaction.amount);
   if (updatedAccount) {
     recordTransaction(transaction);
     saveToDb("accounts", accounts);
     return account;
-  } else return "couldnt make the transaction";
+  } else return -1;
 };
 
 export const validateWithdraw = (account, amount) => {
   const creditAvailable = account.credit - account.usedCredit;
-  console.log("creditAvailable: " + creditAvailable);
-  console.log("amount: " + amount);
   if (account.cash + creditAvailable >= amount) {
-    // withdraw possible
     const restToPay = account.cash - amount;
-    console.log("restToPay: " + restToPay);
-
     if (restToPay > 0) {
       account.cash = restToPay; //cash was enough
     } else {
@@ -134,7 +139,6 @@ export const validateWithdraw = (account, amount) => {
     }
     return account;
   } else {
-    console.log("not enough credit/cash");
     return false;
   }
 };

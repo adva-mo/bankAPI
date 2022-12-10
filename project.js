@@ -1,4 +1,3 @@
-//todo * check order of accounts table
 //todo * search
 //todo * check if user is not active
 //todo * try catch in server side functions
