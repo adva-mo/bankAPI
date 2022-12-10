@@ -1,13 +1,23 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
+import bankData from "../../context/context";
 
 function NewTransactionForm({ setNewTransaction }) {
+  const amount = useRef();
+  const selectOption = useRef();
   const myForm = useRef();
+
+  const bankDataCtx = useContext(bankData);
+  console.log(bankDataCtx.accounts);
+  const accounts = bankDataCtx.accounts.map((account) => account.uid);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const newUserData = Object.fromEntries(new FormData(myForm.current));
-    console.log(newUserData);
-    setNewTransaction((prev) => newUserData);
+    const newTransationData = {
+      amount: amount.current.value,
+      accountNumber: selectOption.current.value,
+    };
+    console.log(newTransationData);
+    setNewTransaction((prev) => newTransationData);
   };
 
   return (
@@ -18,11 +28,19 @@ function NewTransactionForm({ setNewTransaction }) {
     >
       <div>
         <label htmlFor="name">account number</label>
-        {/* <input type="text" name="name" /> */}
+        <select ref={selectOption}>
+          {accounts.map((account) => {
+            return (
+              <option key={account} value={account}>
+                {account}
+              </option>
+            );
+          })}
+        </select>
       </div>
       <div>
         <label htmlFor="amount">amount</label>
-        <input type="text" name="amount" />
+        <input ref={amount} type="text" name="amount" />
       </div>
 
       <input type="submit" className="blue-btn" value="save" />

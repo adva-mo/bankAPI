@@ -1,5 +1,4 @@
-//todo * dropdown of accounts number
-//todo * add new account
+//todo * check order of accounts table
 //todo * search
 //todo * check if user is not active
 //todo * try catch in server side functions

@@ -5,8 +5,6 @@ export const useHttp = (setData) => {
   const [error, setError] = useState(null);
 
   const getData = async (configObj) => {
-    console.log("in hook");
-    console.log(configObj);
     setIsLoading(true);
     try {
       const response = await fetch(configObj.url, {
@@ -21,7 +19,6 @@ export const useHttp = (setData) => {
       const data = await response.json();
       setData && setData(data);
       setIsLoading(false);
-      // return data;
     } catch (e) {
       setError(e.message || "something went wrong");
       setIsLoading(false);

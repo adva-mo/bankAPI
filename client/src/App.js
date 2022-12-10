@@ -7,7 +7,7 @@ import NewTransactionPage from "./pages/NewTransactionPage/NewTransactionPage";
 import bankData from "./context/context";
 import { useHttp } from "./hooks/use-http";
 import { useEffect, useState } from "react";
-
+import NewAccountPage from "./pages/newAccountPage/NewAccountPage";
 function App() {
   const [data, setData] = useState(null);
 
@@ -28,6 +28,7 @@ function App() {
             <Route path="/" element={<Homepage setData={setData} />} />
             <Route path="/new-user" element={<NewUserPage />} />
             <Route path="/new-transaction" element={<NewTransactionPage />} />
+            <Route path="/new-account" element={<NewAccountPage />} />
           </Routes>
         </bankData.Provider>
       ) : (

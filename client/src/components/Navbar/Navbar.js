@@ -26,6 +26,14 @@ function Navbar() {
         <li>
           <NavLink
             className={(navData) => (navData.isActive ? "active" : "")}
+            to={"/new-account"}
+          >
+            Add new account
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            className={(navData) => (navData.isActive ? "active" : "")}
             to={"/new-transaction"}
           >
             Add new transaction

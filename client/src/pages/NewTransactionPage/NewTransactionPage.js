@@ -11,16 +11,15 @@ function NewTransactionPage() {
   const { isLoading, getData } = useHttp();
 
   useEffect(() => {
-    console.log(newTransaction);
     if (!newTransaction) return;
-    // getData({
-    //   url: "/api/users",
-    //   method: "POST",
-    //   body: newTransaction,
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
+    getData({
+      url: "/api/transactions",
+      method: "POST",
+      body: { ...newTransaction, type: transactionType },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   }, [newTransaction]);
 
   let formType;
