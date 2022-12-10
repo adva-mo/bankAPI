@@ -4,7 +4,7 @@ import uniqueId from "unique-id-key";
 
 export const createUser = (userData) => {
   const users = loadFromDb("users");
-  if (!users.find((user) => user.id === userData.id)) {
+  if (!users.find((user) => user.id === Number(userData.id))) {
     const newUser = { ...userData, uid: uniqId(), isActive: true };
     users.push(newUser);
     saveToDb("users", users);

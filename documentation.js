@@ -25,8 +25,8 @@
 //  POST new accounts:
 //      fetch("<domain>/accounts")
 //      body:{
-//           owner: user uid
-//           type: "personal/business"
+//           owner: user uid !required
+//           type: "personal/business" !required
 //      }
 
 //  GET account:
@@ -49,3 +49,9 @@
 //           recipient: recipient account number
 //           ammount: number
 //      }
+
+//? queries
+//  get ("<domain>/api/bank/all") - retrieve all data
+//      ("<domain>/api/bank/accounts?user=<useruid>&amount=<amount>"); get all accounts of the provided user (optinal: with minimum amount of cash )
+
+//  ("<domain>/api/bank/accounts/user=<useruid>&min.cash=<amount>"); get all accounts that have reached the credit limit

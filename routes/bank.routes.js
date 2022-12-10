@@ -1,6 +1,8 @@
 import { Router } from "express";
-import { getAlldata } from "../controllers/bank.controllers.js";
+import { getAlldata, getAccounts } from "../controllers/bank.controllers.js";
 
 export const bankRouter = Router();
 
-bankRouter.get("", getAlldata);
+bankRouter.get("/all", getAlldata);
+
+bankRouter.get("/accounts", getAccounts);
