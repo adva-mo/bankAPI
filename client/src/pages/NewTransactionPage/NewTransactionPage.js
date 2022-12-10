@@ -8,7 +8,7 @@ function NewTransactionPage() {
   const [newTransaction, setNewTransaction] = useState(null);
   const [transactionType, setTransactionType] = useState(null);
 
-  const { isLoading, getData } = useHttp();
+  const { getData } = useHttp();
 
   useEffect(() => {
     if (!newTransaction) return;
@@ -20,6 +20,7 @@ function NewTransactionPage() {
         "Content-Type": "application/json",
       },
     });
+    // eslint-disable-next-line
   }, [newTransaction]);
 
   let formType;

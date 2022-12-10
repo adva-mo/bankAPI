@@ -5,7 +5,7 @@ import { useHttp } from "../../hooks/use-http";
 function NewAccountPage() {
   const [newAccount, setNewAccount] = useState(null);
 
-  const { isLoading, getData } = useHttp();
+  const { getData } = useHttp();
 
   useEffect(() => {
     if (!newAccount) return;
@@ -18,6 +18,7 @@ function NewAccountPage() {
         "Content-Type": "application/json",
       },
     });
+    // eslint-disable-next-line
   }, [newAccount]);
 
   return (
