@@ -2,12 +2,14 @@ import uniqId from "uniqid";
 import { readFileSync, writeFileSync } from "fs";
 import uniqueId from "unique-id-key";
 
-export const createUser = (user) => {
-  const newUser = { ...user, uid: uniqId(), isActive: true };
+export const createUser = (userData) => {
   const users = loadFromDb("users");
-  users.push(newUser);
-  saveToDb("users", users);
-  return newUser;
+  if (!users.find((user) => user.id === userData.id)) {
+    const newUser = { ...userData, uid: uniqId(), isActive: true };
+    users.push(newUser);
+    saveToDb("users", users);
+    return newUser;
+  } else return `user with id ${userData.id} already exist`;
 };
 
 export const loadFromDb = (file) => {

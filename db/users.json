@@ -1,9 +1,1 @@
-[
-  {
-    "id": 9999,
-    "name": "jane",
-    "lastName": "doe",
-    "uid": "x6xldhlbfkgf9a",
-    "isActive": true
-  }
-]
+[{"id":9999,"name":"jane","lastName":"doe","uid":"x6xldhlbfkgf9a","isActive":true},{"id":6666,"name":"bob","lastName":"doe","uid":"x6x13gslbhpq8y9","isActive":true}]
