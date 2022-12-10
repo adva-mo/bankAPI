@@ -1,17 +1,24 @@
-import React, { useEffect } from "react";
-import { useHttp } from "../../hooks/use-http";
+import React, { useEffect, useState } from "react";
+// import { useHttp } from "../../hooks/use-http";
+import Users from "../../components/Users/Users";
 
 function Homepage() {
-  // eslint-disable-next-line
-  const { isLoading, error, getData } = useHttp({ url: "/users" });
+  // const [data, setData] = useState(null);
+  // // const [currentUser, setcurrentUser] = useState(null);
 
-  useEffect(() => {
-    getData();
-  }, []);
+  // const { isLoading, error, getData } = useHttp({ url: "/api/bank" }, setData);
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
+
   return (
     <div>
-      Homepage
-      {isLoading ? <p>Loading...</p> : null}
+      <div className="main-container flex-row">
+        <Users />
+        {/* <Accounts />
+            <Account /> */}
+      </div>
     </div>
   );
 }

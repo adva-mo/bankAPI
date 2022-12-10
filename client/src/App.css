@@ -1,8 +1,12 @@
-.flex-row {
+.flex-row-center {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+.flex-row {
+  display: flex;
+}
+
 ul {
   list-style: none;
 }

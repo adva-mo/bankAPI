@@ -2,6 +2,7 @@ import express from "express";
 import { usersRouter } from "./routes/users.route.js";
 import { accountsRouter } from "./routes/accounts.routes.js";
 import { transactionsRouter } from "./routes/transactions.router.js";
+import { bankRouter } from "./routes/bank.routes.js";
 const PORT = 1234;
 const app = express();
 
@@ -14,9 +15,10 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.use("/users", usersRouter);
-app.use("/accounts", accountsRouter);
-app.use("/transactions", transactionsRouter);
+app.use("/api/bank", bankRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/accounts", accountsRouter);
+app.use("/api/transactions", transactionsRouter);
 
 app.listen(PORT, () => {
   console.log("server is up on port " + PORT);

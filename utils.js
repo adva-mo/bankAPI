@@ -43,7 +43,7 @@ export const findObj = (file, uid) => {
 export const creatAccount = (account) => {
   const newAccount = {
     ...account,
-    uid: uniqueId.RandomNum(6),
+    uid: Number(uniqueId.RandomNum(6)),
     cash: 0,
     credit: 0,
     usedCredit: 0,
@@ -77,7 +77,7 @@ export const transfer = ({ accountNumber, amount, recipient }) => {
   console.log(recipient);
   if (updatedAccount) {
     const recipientAccount = accounts.find(
-      (account) => account.uid === recipient + ""
+      (account) => account.uid === recipient
     );
     recipientAccount.cash += amount;
     console.log(recipientAccount);
@@ -93,9 +93,9 @@ export const addMoney = (transaction) => {
     (account) => account.uid === Number(transaction.accountNumber)
   );
   if (transaction.type === "deposit") {
-    account.cash += Number(transaction.ammount);
+    account.cash += Number(transaction.amount);
   } else if (transaction.type === "credit") {
-    account.credit += Number(transaction.ammount);
+    account.credit += Number(transaction.amount);
   }
   saveToDb("accounts", accounts);
   return recordTransaction(transaction);
@@ -106,7 +106,8 @@ export const withdraw = (transaction) => {
   let account = accounts.find(
     (account) => account.uid === Number(transaction.accountNumber)
   );
-  const updatedAccount = validateWithdraw(account, transaction.ammount);
+  console.log(account);
+  const updatedAccount = validateWithdraw(account, Number(transaction.amount));
   if (updatedAccount) {
     recordTransaction(transaction);
     saveToDb("accounts", accounts);
@@ -114,11 +115,15 @@ export const withdraw = (transaction) => {
   } else return "couldnt make the transaction";
 };
 
-export const validateWithdraw = (account, ammount) => {
+export const validateWithdraw = (account, amount) => {
   const creditAvailable = account.credit - account.usedCredit;
-  if (account.cash + creditAvailable >= ammount) {
+  console.log("creditAvailable: " + creditAvailable);
+  console.log("amount: " + amount);
+  if (account.cash + creditAvailable >= amount) {
     // withdraw possible
-    const restToPay = account.cash - ammount;
+    const restToPay = account.cash - amount;
+    console.log("restToPay: " + restToPay);
+
     if (restToPay > 0) {
       account.cash = restToPay; //cash was enough
     } else {

@@ -8,7 +8,7 @@ export const useHttp = (configObj, setData) => {
     console.log("in hook");
     setIsLoading(true);
     try {
-      const response = await fetch("/users", {
+      const response = await fetch(configObj.url, {
         method: configObj.method ? configObj.method : "GET",
         withCredentials: true,
         crossorigin: true,
@@ -18,8 +18,7 @@ export const useHttp = (configObj, setData) => {
       });
       if (!response.ok) throw new Error("request failed");
       const data = await response.json();
-      console.log(data);
-      //set the data with a function from params
+      setData(data);
     } catch (e) {
       setError(e.message || "something went wrong");
     }

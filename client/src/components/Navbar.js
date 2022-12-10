@@ -6,7 +6,7 @@ import "./Navbar.css";
 function Navbar() {
   return (
     <div className="nav-bar">
-      <ul className="flex-row">
+      <ul className="flex-row-center">
         <li>
           <NavLink
             className={(navData) => (navData.isActive ? "active" : "")}
