@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Table from "../../components/Table/Table";
+import { useHttp } from "../../hooks/use-http";
 
-function Homepage() {
+function Homepage({ setData }) {
+  const { getData } = useHttp(setData);
+
+  useEffect(() => {
+    getData({ url: "/api/bank/all" });
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <div>
       <div className="main-container flex-row">

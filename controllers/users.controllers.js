@@ -5,6 +5,7 @@ export const getAllUsers = (req, res) => {
 };
 
 export const addUser = (req, res) => {
+  console.log(req.body);
   const newUser = createUser(req.body);
   res.status(200).send(newUser);
 };

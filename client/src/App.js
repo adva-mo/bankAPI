@@ -11,13 +11,11 @@ import { useEffect, useState } from "react";
 function App() {
   const [data, setData] = useState(null);
 
-  const { isLoading, error, getData } = useHttp(
-    { url: "/api/bank/all" },
-    setData
-  );
+  const { isLoading, getData } = useHttp(setData);
 
   useEffect(() => {
-    getData();
+    getData({ url: "/api/bank/all" });
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -27,7 +25,7 @@ function App() {
         <bankData.Provider value={data}>
           <Navbar />
           <Routes>
-            <Route path="/" element={<Homepage />} />
+            <Route path="/" element={<Homepage setData={setData} />} />
             <Route path="/new-user" element={<NewUserPage />} />
             <Route path="/new-transaction" element={<NewTransactionPage />} />
           </Routes>
