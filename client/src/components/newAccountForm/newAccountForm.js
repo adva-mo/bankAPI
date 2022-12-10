@@ -37,7 +37,7 @@ function NewAccountForm({ setNewAccount }) {
         </select>
       </div>
       <div>
-        <label htmlFor="amount">amount</label>
+        <label htmlFor="amount">type</label>
         <select ref={accountType}>
           <option>personal</option>
           <option>business</option>
