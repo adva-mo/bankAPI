@@ -1,23 +1,18 @@
-import React, { useEffect, useState } from "react";
-// import { useHttp } from "../../hooks/use-http";
-import Users from "../../components/Users/Users";
+import React from "react";
+import Table from "../../components/Table/Table";
 
 function Homepage() {
-  // const [data, setData] = useState(null);
-  // // const [currentUser, setcurrentUser] = useState(null);
-
-  // const { isLoading, error, getData } = useHttp({ url: "/api/bank" }, setData);
-
-  // useEffect(() => {
-  //   getData();
-  // }, []);
-
   return (
     <div>
       <div className="main-container flex-row">
-        <Users />
-        {/* <Accounts />
-            <Account /> */}
+        <div className="half-main-content">
+          <h2>USERS</h2>
+          <Table category="users" />
+        </div>
+        <div className="half-main-content">
+          <h2>ACCOUNTS</h2>
+          <Table category="accounts" />
+        </div>
       </div>
     </div>
   );

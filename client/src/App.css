@@ -10,3 +10,11 @@
 ul {
   list-style: none;
 }
+.half-main-content {
+  background-color: antiquewhite;
+  width: 50%;
+}
+td,
+tr {
+  margin: 0.5rem;
+}

@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import Homepage from "./pages/hompage/Homepage";
 import NewUserPage from "./pages/NewUserPage/NewUserPage";
 import NewTransactionPage from "./pages/NewTransactionPage/NewTransactionPage";
@@ -10,9 +10,11 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [data, setData] = useState(null);
-  // const [currentUser, setcurrentUser] = useState(null);
 
-  const { isLoading, error, getData } = useHttp({ url: "/api/bank" }, setData);
+  const { isLoading, error, getData } = useHttp(
+    { url: "/api/bank/all" },
+    setData
+  );
 
   useEffect(() => {
     getData();
@@ -31,7 +33,7 @@ function App() {
           </Routes>
         </bankData.Provider>
       ) : (
-        ""
+        <p>couldnt fetch</p>
       )}
     </div>
   );

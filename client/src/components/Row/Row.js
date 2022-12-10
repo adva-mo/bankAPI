@@ -1,12 +1,13 @@
 import React from "react";
 import "./Row.css";
 
-function Row({ name, lastName, id, isActive }) {
+function Row({ name, lastName, id, uid, isActive }) {
   return (
     <tr>
+      <td>{id}</td>
       <td>{name}</td>
       <td>{lastName}</td>
-      <td>{id}</td>
+      <td>{uid}</td>
       <td>{isActive ? "active" : "not active"}</td>
     </tr>
   );
