@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import NewAccountForm from "../../components/newAccountForm/newAccountForm";
 import { useHttp } from "../../hooks/use-http";
 import { useNavigate } from "react-router-dom";
+
 function NewAccountPage() {
   const [newAccount, setNewAccount] = useState(null);
   const navigate = useNavigate();
