@@ -53,7 +53,7 @@ export const creatAccount = (account) => {
   try {
     const newAccount = {
       ...account,
-      uid: Number(uniqueiId.RandomNum(6)),
+      uid: Number(uniqueId.RandomNum(6)),
       cash: 0,
       credit: 0,
       usedCredit: 0,
