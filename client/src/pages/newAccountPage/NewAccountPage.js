@@ -4,7 +4,7 @@ import { useHttp } from "../../hooks/use-http";
 import { useNavigate } from "react-router-dom";
 function NewAccountPage() {
   const [newAccount, setNewAccount] = useState(null);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { getData } = useHttp();
 
   useEffect(() => {
@@ -17,10 +17,9 @@ function NewAccountPage() {
       headers: {
         "Content-Type": "application/json",
       },
+    }).then(() => {
+      navigate("/");
     });
-    // .then(() => {
-    //   navigate("/");
-    // });
     // eslint-disable-next-line
   }, [newAccount]);
 
