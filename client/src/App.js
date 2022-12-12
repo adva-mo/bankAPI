@@ -14,7 +14,7 @@ function App() {
   const { isLoading, getData } = useHttp(setData);
 
   useEffect(() => {
-    getData({ url: "/api/bank/all" });
+    getData({ url: "https://bankapi-5xef.onrender.com/api/bank/all" });
     // eslint-disable-next-line
   }, []);
 
