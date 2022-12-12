@@ -5,11 +5,12 @@ import { transactionsRouter } from "./routes/transactions.router.js";
 import { bankRouter } from "./routes/bank.routes.js";
 // import { appRouter } from "./routes/app.routes.js";
 import { index } from "./utils/index.js";
-
+import cors from "cors";
 const PORT = 1234;
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.use((err, req, res, next) => {
   if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
