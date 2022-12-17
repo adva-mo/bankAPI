@@ -84,7 +84,7 @@ export const withdraw = async (transaction, ifTransfer) => {
   const findAccount = await account.findById(transaction.accountNumber);
   const creditAvailable = findAccount.credit - findAccount.usedCredit;
   if (findAccount.cash + creditAvailable >= transaction.amount) {
-    const restToPay = findAccount.cash - transaction.amount;
+    const restToPay = Number(findAccount.cash) - Number(transaction.amount);
     if (restToPay >= 0) {
       const findAndU = await account.findByIdAndUpdate(
         transaction.accountNumber,
@@ -97,7 +97,7 @@ export const withdraw = async (transaction, ifTransfer) => {
         transaction.accountNumber,
         {
           cash: 0,
-          usedCredit: findAccount.usedCredit - restToPay,
+          usedCredit: Number(findAccount.usedCredit) - restToPay,
         }
       );
     }
