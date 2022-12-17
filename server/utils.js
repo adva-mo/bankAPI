@@ -58,7 +58,7 @@ export const transfer = async (transaction) => {
   const findRecepient = await account.findById(transaction.recipient);
   const findToUpdateAccount = await account.findByIdAndUpdate(
     transaction.recipient,
-    { cash: findRecepient.cash + transaction.amount }
+    { cash: Number(findRecepient.cash) + Number(transaction.amount) }
   );
   return recordTransaction(transaction);
 };

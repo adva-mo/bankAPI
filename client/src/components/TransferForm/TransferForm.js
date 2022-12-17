@@ -46,7 +46,7 @@ function TransferForm({ setNewTransaction }) {
       </div>
       <div>
         <label htmlFor="amount">amount</label>
-        <input type="text" name="amount" />
+        <input type="number" name="amount" />
       </div>
 
       <input type="submit" className="blue-btn" value="save" />
