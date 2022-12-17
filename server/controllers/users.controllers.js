@@ -1,4 +1,4 @@
-import { createUser, loadFromDb, findObj } from "../utils.js";
+import { createUser, loadFromDb } from "../utils.js";
 
 export const getAllUsers = (req, res) => {
   res.status(200).send(loadFromDb("users"));
@@ -12,9 +12,9 @@ export const addUser = (req, res) => {
     : res.status(401).send(`user with id provided already exist`);
 };
 
-export const getUser = (req, res) => {
-  const user = findObj("users", req.params.uid);
-  user != -1
-    ? res.status(201).send(user)
+export const getUser = async (req, res) => {
+  const foundUser = await user.findById(req.params.id);
+  foundUser
+    ? res.status(201).send(foundUser)
     : res.status(401).send("user not found");
 };

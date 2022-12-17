@@ -13,7 +13,7 @@ function NewTransactionPage() {
   useEffect(() => {
     if (!newTransaction) return;
     getData({
-      url: "/api/transactions",
+      url: "https://bankapi-5xef.onrender.com/api/transactions",
       method: "POST",
       body: { ...newTransaction, type: transactionType },
       headers: {

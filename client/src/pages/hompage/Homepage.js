@@ -6,7 +6,7 @@ function Homepage({ setData }) {
   const { getData } = useHttp(setData);
 
   useEffect(() => {
-    getData({ url: "https://bankapi-5xef.onrender.com/api/bank/all" });
+    getData({ url: "https://localhost:1234/api/bank/all" });
     // eslint-disable-next-line
   }, []);
 

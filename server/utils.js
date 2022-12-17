@@ -1,68 +1,36 @@
-import uniqId from "uniqid";
-import { readFileSync, writeFileSync } from "fs";
-import uniqueId from "unique-id-key";
-
-export const createUser = (userData) => {
-  const users = loadFromDb("users");
-  if (!users.find((user) => Number(user.id) === Number(userData.id))) {
-    const newUser = {
-      ...userData,
-      uid: uniqueId.RandomString(6),
-      isActive: true,
-    };
-    users.push(newUser);
-    saveToDb("users", users);
+import { user } from "./models/User.model.js";
+import { account } from "./models/Account.model.js";
+import { transaction } from "./models/Transaction.model.js";
+export const createUser = async (userData) => {
+  try {
+    const newUser = await user.create(userData);
     return newUser;
-  } else return -1;
-};
-
-export const loadFromDb = (file) => {
-  try {
-    const dataBuffer = readFileSync(`./db/${file}.json`);
-    const dataJson = dataBuffer.toString();
-    return JSON.parse(dataJson);
   } catch (e) {
-    return [];
+    console.log(e);
+    return -1;
   }
 };
 
-export const saveToDb = (file, data) => {
+export const loadFromDb = async (model) => {
   try {
-    const dataJson = JSON.stringify(data);
-    writeFileSync(`./db/${file}.json`, dataJson);
+    const data = await model.find({});
+    return data;
   } catch (e) {
-    return e.message;
+    return e;
   }
 };
 
-//todo check if the funtion below is being used only once
-export const findObj = (file, uid) => {
-  // console.log(uid);
-  let obj;
-  const data = loadFromDb(file);
-  if (file === "users") {
-    obj = data.find((item) => item.uid === uid);
-  } else if (file === "accounts") {
-    obj = data.find((item) => item.uid === uid);
-  }
-  if (obj) return obj;
-  else return -1;
+export const findUserById = async (id) => {
+  const foundUser = await user.findById(id);
+  return foundUser;
 };
 
-export const creatAccount = (account) => {
+export const creatAccount = async (bodyAccount) => {
   try {
-    const newAccount = {
-      ...account,
-      uid: Number(uniqueId.RandomNum(6)),
-      cash: 0,
-      credit: 0,
-      usedCredit: 0,
-    };
-    const accounts = loadFromDb("accounts");
-    accounts.push(newAccount);
-    saveToDb("accounts", accounts);
+    const newAccount = await account.create(bodyAccount);
     return newAccount;
-  } catch {
+  } catch (e) {
+    console.log(e);
     return -1;
   }
 };
@@ -82,78 +50,66 @@ export const createTransaction = (transaction) => {
   }
 };
 
-export const transfer = ({ accountNumber, amount, recipient }) => {
-  const accounts = loadFromDb("accounts");
-  const userAccount = accounts.find(
-    (account) => Number(account.uid) === Number(accountNumber)
+export const transfer = async (transaction) => {
+  const updatedAccount = await withdraw(transaction, "transfer");
+  if (!updatedAccount) return -1;
+  const findAccount = await account.findById(transaction.accountNumber);
+  const findRecepient = await account.findById(transaction.recipient);
+  const findToUpdateAccount = await account.findByIdAndUpdate(
+    transaction.recipient,
+    { cash: findRecepient.cash + transaction.amount }
   );
-  const updatedAccount = validateWithdraw(userAccount, amount);
-  if (updatedAccount) {
-    const recipientAccount = accounts.find(
-      (account) => account.uid === Number(recipient)
-    );
-    recipientAccount.cash += Number(amount);
-    saveToDb("accounts", accounts);
-  } else {
-    return -1;
-  }
-};
-
-export const addMoney = (transaction) => {
-  const accounts = loadFromDb("accounts");
-  let account = accounts.find(
-    (account) => account.uid === Number(transaction.accountNumber)
-  );
-  if (!account) return -1;
-  if (transaction.type === "deposit") {
-    account.cash += Number(transaction.amount);
-  } else if (transaction.type === "credit") {
-    account.credit += Number(transaction.amount);
-  }
-  saveToDb("accounts", accounts);
   return recordTransaction(transaction);
 };
 
-export const withdraw = (transaction) => {
-  const accounts = loadFromDb("accounts");
-  let account = accounts.find(
-    (account) => account.uid === Number(transaction.accountNumber)
-  );
-  const updatedAccount = validateWithdraw(account, transaction.amount);
-  if (updatedAccount) {
-    recordTransaction(transaction);
-    saveToDb("accounts", accounts);
-    return account;
-  } else return -1;
+export const addMoney = async (transaction) => {
+  const findAccount = await account.findById(transaction.accountNumber);
+  if (transaction.type === "deposit") {
+    const findToUpdateAccount = await account.findByIdAndUpdate(
+      transaction.accountNumber,
+      { cash: findAccount.cash + transaction.amount }
+    );
+  } else if (transaction.type === "credit") {
+    const findToUpdateAccount = await account.findByIdAndUpdate(
+      transaction.accountNumber,
+      { credit: findAccount.credit + transaction.amount }
+    );
+  }
+
+  return recordTransaction(transaction);
 };
 
-export const validateWithdraw = (account, amount) => {
-  const creditAvailable = account.credit - account.usedCredit;
-  if (account.cash + creditAvailable >= amount) {
-    const restToPay = account.cash - amount;
-    if (restToPay > 0) {
-      account.cash = restToPay; //cash was enough
+export const withdraw = async (transaction, ifTransfer) => {
+  const findAccount = await account.findById(transaction.accountNumber);
+  const creditAvailable = findAccount.credit - findAccount.usedCredit;
+  if (findAccount.cash + creditAvailable >= transaction.amount) {
+    const restToPay = findAccount.cash - transaction.amount;
+    if (restToPay >= 0) {
+      const findAndU = await account.findByIdAndUpdate(
+        transaction.accountNumber,
+        {
+          cash: restToPay,
+        }
+      );
     } else {
-      account.cash = 0;
-      account.usedCredit -= restToPay;
+      const findAndU = await account.findByIdAndUpdate(
+        transaction.accountNumber,
+        {
+          cash: 0,
+          usedCredit: findAccount.usedCredit - restToPay,
+        }
+      );
     }
-    return account;
   } else {
     return false;
   }
+  if (ifTransfer === "transfer") return true;
+  return recordTransaction(transaction);
 };
 
-export const recordTransaction = (transaction) => {
-  const date = new Date();
-  const newTransaction = {
-    ...transaction,
-    owner: findObj("accounts", transaction.accountNumber).owner,
-    date: date.toLocaleDateString(),
-    time: date.toLocaleTimeString(),
-    uid: uniqId(),
-  };
-  const transactions = loadFromDb("transactions");
-  transactions.push(newTransaction);
-  saveToDb("transactions", transactions);
+export const recordTransaction = async (transactionObj) => {
+  const newTransaction = await transaction.create({
+    ...transactionObj,
+  });
   return newTransaction;
 };

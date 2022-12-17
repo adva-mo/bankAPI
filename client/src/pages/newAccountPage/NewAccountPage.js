@@ -12,7 +12,7 @@ function NewAccountPage() {
     if (!newAccount) return;
     console.log(newAccount);
     getData({
-      url: "/api/accounts",
+      url: "https://localhost:1234/api/accounts",
       method: "POST",
       body: newAccount,
       headers: {

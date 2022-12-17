@@ -9,6 +9,6 @@ export const accountsRouter = Router();
 
 accountsRouter.get("", getAllAccounts);
 
-accountsRouter.get("/:uid", getAccount);
+accountsRouter.get("/:id", getAccount);
 
 accountsRouter.post("", addNewAccount);

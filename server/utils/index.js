@@ -16,7 +16,7 @@ USERS:
      }
 
  GET user:
-     fetch("https://bankapi-5xef.onrender.com/api/users/:uid")
+     fetch("https://bankapi-5xef.onrender.com/api/users/:id")
 
 ACCOUNTS:
 
@@ -31,7 +31,7 @@ ACCOUNTS:
      }
 
  GET account:
-     fetch("https://bankapi-5xef.onrender.com/api/accounts/:uid")
+     fetch("https://bankapi-5xef.onrender.com/api/accounts/:id")
 
 TRANSACTIONS:
 

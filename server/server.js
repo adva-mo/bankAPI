@@ -3,7 +3,7 @@ import { usersRouter } from "./routes/users.route.js";
 import { accountsRouter } from "./routes/accounts.routes.js";
 import { transactionsRouter } from "./routes/transactions.router.js";
 import { bankRouter } from "./routes/bank.routes.js";
-// import { appRouter } from "./routes/app.routes.js";
+import "./db/mongoose.js";
 import { index } from "./utils/index.js";
 import cors from "cors";
 const PORT = 1234;
@@ -19,7 +19,7 @@ app.use((err, req, res, next) => {
   next();
 });
 app.get("", (req, res) => {
-  res.write(index);
+  res.status(200).write(index);
 });
 app.use("/api/bank", bankRouter);
 app.use("/api/users", usersRouter);

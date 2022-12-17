@@ -1,19 +1,19 @@
 import { loadFromDb } from "../utils.js";
 import { getUserAccounts } from "../utils/bank.utils.js";
-
-export const getAlldata = (req, res) => {
-  console.log("all data");
+import { user } from "../models/User.model.js";
+import { account } from "../models/Account.model.js";
+import { transaction } from "../models/Transaction.model.js";
+export const getAlldata = async (req, res) => {
   res.status(200).send({
-    users: loadFromDb("users"),
-    accounts: loadFromDb("accounts"),
-    transactions: loadFromDb("transactions"),
+    users: await loadFromDb(user),
+    accounts: await loadFromDb(account),
+    transactions: await loadFromDb(transaction),
   });
 };
 
 export const getAccounts = (req, res) => {
   const userAccounts = getUserAccounts(req.query.user);
   if (!userAccounts) return res.status(404).send("user doesnt have accounts");
-
   if (req.query.amount) {
     const amount = Number(req.query.amount);
     const filteredAccounts = userAccounts.filter(
