@@ -22,12 +22,16 @@ function NewUserForm({ setNewUser }) {
         <input type="text" name="name" />
       </div>
       <div>
-        <label htmlFor="name">enter user last name</label>
-        <input type="text" name="lastName" />
+        <label htmlFor="family">enter user last name</label>
+        <input type="text" name="family" />
       </div>
       <div>
-        <label htmlFor="name">enter user passport ID</label>
-        <input type="text" name="id" />
+        <label htmlFor="pasportID">enter user passport ID</label>
+        <input type="text" name="pasportID" />
+      </div>
+      <div>
+        <label htmlFor="email">enter user email</label>
+        <input type="text" name="email" />
       </div>
 
       <input type="submit" className="blue-btn" value="save" />

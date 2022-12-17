@@ -8,7 +8,7 @@ function NewTransactionForm({ setNewTransaction }) {
 
   const bankDataCtx = useContext(bankData);
   console.log(bankDataCtx.accounts);
-  const accounts = bankDataCtx.accounts.map((account) => account.uid);
+  const accounts = bankDataCtx.accounts.map((account) => account._id);
 
   const submitHandler = async (e) => {
     e.preventDefault();

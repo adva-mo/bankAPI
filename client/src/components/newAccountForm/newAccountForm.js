@@ -7,7 +7,7 @@ function NewAccountForm({ setNewAccount }) {
   const myForm = useRef();
 
   const bankDataCtx = useContext(bankData);
-  const users = bankDataCtx.users.map((user) => user.uid);
+  const users = bankDataCtx.users.map((user) => user._id);
 
   const submitHandler = async (e) => {
     e.preventDefault();

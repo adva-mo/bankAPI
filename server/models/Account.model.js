@@ -15,11 +15,11 @@ const accountSchema = new Schema({
       if (!findUserById(value)) throw Error("User not found!");
     },
   },
-  Type: {
+  type: {
     type: String,
     required: true,
     validate(value) {
-      if (value !== "Personal" && value !== "Business")
+      if (value !== "personal" && value !== "business")
         throw Error("Type must be Business or Personal!");
     },
   },
