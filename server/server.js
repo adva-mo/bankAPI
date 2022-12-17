@@ -19,7 +19,7 @@ app.use((err, req, res, next) => {
   next();
 });
 app.get("", (req, res) => {
-  res.status(200).write(index).send();
+  res.send("https://github.com/adva-mo/bankAPI#readme");
 });
 app.use("/api/bank", bankRouter);
 app.use("/api/users", usersRouter);
