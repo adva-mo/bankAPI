@@ -1,6 +1,7 @@
 import { user } from "./models/User.model.js";
 import { account } from "./models/Account.model.js";
 import { transaction } from "./models/Transaction.model.js";
+
 export const createUser = async (userData) => {
   try {
     const newUser = await user.create(userData);

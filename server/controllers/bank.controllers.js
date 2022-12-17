@@ -3,12 +3,17 @@ import { getUserAccounts } from "../utils/bank.utils.js";
 import { user } from "../models/User.model.js";
 import { account } from "../models/Account.model.js";
 import { transaction } from "../models/Transaction.model.js";
+
 export const getAlldata = async (req, res) => {
-  res.status(200).send({
-    users: await loadFromDb(user),
-    accounts: await loadFromDb(account),
-    transactions: await loadFromDb(transaction),
-  });
+  try {
+    res.status(200).send({
+      users: await loadFromDb(user),
+      accounts: await loadFromDb(account),
+      transactions: await loadFromDb(transaction),
+    });
+  } catch (e) {
+    res.status(500).send(e);
+  }
 };
 
 export const getAccounts = (req, res) => {
