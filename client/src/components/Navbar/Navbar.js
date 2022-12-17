@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Search from "../search/Search";
+// import Search from "../search/Search";
 import "./Navbar.css";
 
 function Navbar() {
@@ -39,7 +39,7 @@ function Navbar() {
             Add new transaction
           </NavLink>
         </li>
-        <Search />
+        {/* <Search /> */}
       </ul>
     </div>
   );

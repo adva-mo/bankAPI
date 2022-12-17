@@ -5,7 +5,7 @@ function TransferForm({ setNewTransaction }) {
   const myForm = useRef();
   const bankDataCtx = useContext(bankData);
 
-  const accounts = bankDataCtx.accounts.map((account) => account.uid);
+  const accounts = bankDataCtx.accounts.map((account) => account._id);
 
   const submitHandler = async (e) => {
     e.preventDefault();

@@ -25,7 +25,7 @@ function NewAccountForm({ setNewAccount }) {
       className="new-user-card"
     >
       <div>
-        <label htmlFor="name">user uid number</label>
+        <label htmlFor="name">user id number</label>
         <select ref={selectUserOption}>
           {users.map((account) => {
             return (

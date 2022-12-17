@@ -68,12 +68,12 @@ export const addMoney = async (transaction) => {
   if (transaction.type === "deposit") {
     const findToUpdateAccount = await account.findByIdAndUpdate(
       transaction.accountNumber,
-      { cash: findAccount.cash + transaction.amount }
+      { cash: Number(findAccount.cash) + Number(transaction.amount) }
     );
   } else if (transaction.type === "credit") {
     const findToUpdateAccount = await account.findByIdAndUpdate(
       transaction.accountNumber,
-      { credit: findAccount.credit + transaction.amount }
+      { credit: Number(findAccount.credit) + Number(transaction.amount) }
     );
   }
 
