@@ -12,7 +12,7 @@ function NewAccountPage() {
     if (!newAccount) return;
     console.log(newAccount);
     getData({
-      url: "https://localhost:1234/api/accounts",
+      url: "https://bankapi-5xef.onrender.com/api/accounts",
       method: "POST",
       body: newAccount,
       headers: {
